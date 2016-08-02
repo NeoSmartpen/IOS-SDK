@@ -201,12 +201,13 @@
     }
     return image;
 }
-- (UIImage *) drawPageWithImage:(UIImage *)image size:(CGRect)bounds
+- (UIImage *) drawPageWithImage:(UIImage *)image size:(CGRect)bounds drawBG:(BOOL)drawBG opaque:(BOOL)opaque
 {
     CGRect imageBounds = bounds;
     if (image==nil)
     {
-        image = [self getBackgroundImage];
+        if(drawBG)
+            image = [self getBackgroundImage];
     }
     else {
         // For drawInRect, if the image size does not fit it will resize image.
@@ -214,14 +215,16 @@
     }
     @autoreleasepool {
         
-    UIGraphicsBeginImageContextWithOptions(bounds.size, YES, 0.0);
+    UIGraphicsBeginImageContextWithOptions(bounds.size, opaque, 0.0);
     if (image) {
         [image drawInRect:imageBounds];
     }
     else {
-        UIBezierPath *rectpath = [UIBezierPath bezierPathWithRect:bounds];
-        [[UIColor colorWithWhite:0.95f alpha:1] setFill];
-        [rectpath fill];
+        if (opaque) {
+            UIBezierPath *rectpath = [UIBezierPath bezierPathWithRect:bounds];
+            [[UIColor colorWithWhite:0.95f alpha:1] setFill];
+            [rectpath fill];
+        }
     }
     
     CGSize paperSize=self.paperSize;
@@ -325,11 +328,12 @@
 }
 - (UIImage *) drawStroke: (NJStroke *)stroke withImage:(UIImage *)image
                      size:(CGRect)bounds scale:(float)scale
-                  offsetX:(float)offset_x offsetY:(float)offset_y
+                  offsetX:(float)offset_x offsetY:(float)offset_y drawBG:(BOOL)drawBG opaque:(BOOL)opaque
 {
     CGRect imageBounds = bounds;
     if (image==nil)
     {
+        if(drawBG)
         image = [self getBackgroundImage];
     }
     else {
@@ -339,14 +343,18 @@
 @autoreleasepool {
     // autoreleasepool added by namSSan 2015-02-13 - refer to
     //http://stackoverflow.com/questions/19167732/coregraphics-drawing-causes-memory-warnings-crash-on-ios-7
-    UIGraphicsBeginImageContextWithOptions(bounds.size, YES, 0.0);
+    //UIGraphicsBeginImageContextWithOptions(bounds.size, YES, 0.0);
+    UIGraphicsBeginImageContextWithOptions(bounds.size, opaque, 0.0);
     if (image) {
+        
         [image drawInRect:imageBounds];
     }
     else {
-        UIBezierPath *rectpath = [UIBezierPath bezierPathWithRect:bounds];
-        [[UIColor colorWithWhite:0.95f alpha:1] setFill];
-        [rectpath fill];
+        if (opaque) {
+            UIBezierPath *rectpath = [UIBezierPath bezierPathWithRect:bounds];
+            [[UIColor colorWithWhite:0.95f alpha:1] setFill];
+            [rectpath fill];
+        }
     }
     CGSize paperSize=self.paperSize;
     float xRatio=bounds.size.width/paperSize.width;

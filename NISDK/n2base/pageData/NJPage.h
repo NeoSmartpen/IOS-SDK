@@ -32,12 +32,12 @@
 - (void) addMedia:(NJMedia *)media;
 - (void) addStrokes:(NJStroke *)stroke;
 - (void) insertStrokeByTimestamp:(NJStroke *)stroke;
-- (UIImage *) drawPageWithImage:(UIImage *)image size:(CGRect)bounds;
+- (UIImage *) drawPageWithImage:(UIImage *)image size:(CGRect)bounds drawBG:(BOOL)drawBG opaque:(BOOL)opaque;
 - (UIImage *) drawPageWithImage:(UIImage *)image size:(CGRect)bounds forMode:(NeoMediaRenderingMode)mode;
 - (UIImage *) drawPageBackgroundImage:(UIImage *)image size:(CGRect)bounds;
 - (UIImage *) drawStroke: (NJStroke *)stroke withImage:(UIImage *)image
-                      size:(CGRect)bounds scale:(float)scale
-                   offsetX:(float)offset_x offsetY:(float)offset_y;
+                    size:(CGRect)bounds scale:(float)scale
+                 offsetX:(float)offset_x offsetY:(float)offset_y drawBG:(BOOL)drawBG opaque:(BOOL)opaque;
 - (UIImage *) drawStrokesFrom:(NSInteger)start to:(NSInteger)end time:(UInt64)timestamp withImage:(UIImage *)image
                     withVoice:(BOOL)withVoice forMode:(NeoMediaRenderingMode)mode
                          size:(CGRect)bounds scale:(float)scale
