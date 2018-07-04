@@ -3,7 +3,7 @@
 //  n2sample
 //
 //  Created by Ken You on 20/09/2014.
-//  Copyright (c) 2014 Urimalo. All rights reserved.
+//  Copyright (c) 2014 Neolab. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
